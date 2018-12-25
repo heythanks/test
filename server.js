@@ -34,12 +34,12 @@ var server = http.createServer(function(request, response){
   }else if(path == "/main.js"){
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/javascript; charset=utf-8')
-    response.write('console.log(1111)')
+    response.write('alert("这是js执行的")')
     response.end()
   }else if(path == "/style.css"){
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/css; charset=utf-8')
-    response.write('h1{color: yellow}')
+    response.write('h1{color: red}')
     response.end()
   }else{
     response.statusCode = 404
