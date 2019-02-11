@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		main{
+			text-align: center
+		}
+		#wrapper{
+			display: inline-block;
+		}
+		.parent>div{
+			display: inline-block;
+			height: 60px;
+			width: 60px;
+			border: 1px solid red;
+			text-align: center;
+			position: relative;
+		}
+		.parent:nth-child(2){
+			margin-left: 1em;
+		}
+		.parent:nth-child(3){
+			margin-left: 2em;
+		}
+		.parent>div:hover>button{
+			display: block
+		}
+		.parent button{
+			border: none;
+			position: absolute;
+			right: 5px;
+			bottom: 2px;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<header></header>
+	<main>
+		<div id="wrapper"></div>
+	</main>
+	<footer></footer>
+<script>
+	var keys = {
+		'0':{
+			'0':'q',
+			'1':'w',
+			'2':'e',
+			'3':'r',
+			'4':'t',
+			'5':'y',
+			'6':'u',
+			'7':'i',
+			'8':'o',
+			'9':'p',
+			'length':'10',
+		},
+		'1':{
+			'0':'a',
+			'1':'s',
+			'2':'d',
+			'3':'f',
+			'4':'g',
+			'5':'h',
+			'6':'j',
+			'7':'k',
+			'8':'l',
+			'length':'9',
+		},
+		'2':{
+			'0':'z',
+			'1':'x',
+			'2':'c',
+			'3':'v',
+			'4':'b',
+			'5':'n',
+			'6':'m',
+			'length':'7', 
+		},
+		'length': '3'
+	};
+	var hash = {};
+	var hashlocal = localStorage.getItem('hash') || '';
+	if(hashlocal){
+		hash = JSON.parse(hashlocal)
+	}else{
+		hash = {
+		'q':'qq.com',
+		'b':'baidu.com',
+		'a':'alibaba.com',
+		't': 'tencent.com',
+		'y': 'youtube.com',
+		'u': 'uc.com',
+		'w': 'weibo.com'
+
+		}
+	}
+	var index = 0;
+	while(index<keys['length']){
+		var newdiv = document.createElement('div');
+		newdiv.className = "parent"
+		wrapper.appendChild(newdiv);
+		index2 = 0;
+		while(index2<keys[index].length){
+			var newdiv2 = document.createElement('div');
+			newdiv2.innerText = keys[index][index2];
+			buttonBox = document.createElement('button');
+			buttonBox.innerText = '编辑';
+			buttonBox.id = keys[index][index2];
+			buttonBox.onclick = function(e){
+				key = e.target.id;
+				x = prompt('给我一个网址');
+				hash[key] = x;
+				localStorage.setItem('hash',JSON.stringify(hash))
+			}
+			newdiv.appendChild(newdiv2);
+			newdiv2.appendChild(buttonBox)
+			index2++
+		}
+		index++;
+	}
+	document.onkeypress = function(event){
+		key = event['key'];
+		website = hash[key];
+		window.open('http://' + website, '_blank')
+	}
+</script>	
+</body>
+
+</html>
