@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的画板</title>
+    <script src="//at.alicdn.com/t/font_1040947_lq96hcrnj8f.js"></script>
+    <style>
+        body,
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow: hidden
+        }
+
+        #canvas {
+            background: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .actions {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+
+        .actions svg {
+            transition: 0.5s all;
+        }
+
+        .actions svg.active {
+            fill: red;
+            transform: scale(1.5)
+        }
+
+        .actions.x>#brush {
+            display: block
+        }
+
+        .icon {
+            width: 1.5em;
+            height: 1.5em;
+            margin-left: 10px;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+        }
+
+        .colors {
+            position: fixed;
+            top: 34px;
+            left: 8px;
+        }
+
+        .colors li {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            list-style: none;
+            border: 1px solid #eee;
+            margin-top: 10px
+        }
+
+        .colors li.active {
+            transition: 0.5s all;
+            transform: scale(1.5)
+        }
+
+        .colors li.red {
+            background: red;
+        }
+
+        .colors li.yellow {
+            background: yellow;
+        }
+
+        .colors li.blue {
+            background: blue;
+        }
+
+        .sizes {
+            position: fixed;
+            position: fixed;
+            top: 34px;
+            right: 20px;
+        }
+
+        .sizes>li {
+            list-style: none;
+            margin-top: 10px
+        }
+
+        .sizes>li.active {
+            transform: scale(1.5)
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="actions" id=actions>
+        <svg class="icon active" aria-hidden="true" id="pen">
+            <use xlink:href="#icon-pencil1"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true" id="eraser">
+            <use xlink:href="#icon-Eraser-Tool"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true" id="remove">
+            <use xlink:href="#icon-remove"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true" id="save">
+            <use xlink:href="#icon-save"></use>
+        </svg>
+    </div>
+    <ul class="colors">
+        <li class="red active" id='red'></li>
+        <li class="yellow" id="yellow"></li>
+        <li class="blue" id="blue"></li>
+    </ul>
+    <ul class="sizes">
+        <li class="active" id="thin">细线</li>
+        <li class="thick" id="thick">粗线</li>
+    </ul>
+    <script>
+        var yyy = document.getElementById("canvas");
+        var context = canvas.getContext('2d');
+        context.fillStyle = 'white';
+        context.fillRect(0,0,yyy.width,yyy.height);
+        var lineWidth = 5;
+        autoSetCanvasSize(yyy)
+        listenToUser(yyy)
+        function autoSetCanvasSize(canvas) {
+            setCanvasSize()
+            window.onresize = function () {
+                setCanvasSize()
+            }
+            function setCanvasSize() {
+                var pageWidth = document.documentElement.clientWidth;
+                var pageHeight = document.documentElement.clientHeight;
+                canvas.width = pageWidth;
+                canvas.height = pageHeight;
+            }
+
+        }
+
+        /**监听canvas事件**/
+        function listenToUser(canvas) {
+            var using = false;
+            var oldPoint = null;
+            //特性检测
+            if (document.body.ontouchstart !== undefined) {
+                //触屏设备
+                canvas.ontouchstart = function (aaa) {
+                    var x = aaa.targetTouches[0].clientX;
+                    var y = aaa.targetTouches[0].clientY;
+                    using = true;
+                    if (usingEnabled) {
+                        context.clearRect(x - 5, y - 5, 10, 10)
+                    } else {
+                        oldPoint = { x: x, y: y }
+                    }
+                }
+                canvas.ontouchmove = function (aaa) {
+                    console.log(111)
+                    var x = aaa.targetTouches[0].clientX;
+                    var y = aaa.targetTouches[0].clientY;
+                    if (!using) {
+                        return
+                    }
+                    if (usingEnabled) {
+                        console.log(222)
+                        context.clearRect(x - 5, y - 5, 10, 10);
+                    } else {
+                        console.log(333)
+                        var newPoint = { x: x, y: y }
+                        drawLine(oldPoint.x, oldPoint.y, newPoint.x, newPoint.y);
+                        oldPoint = newPoint
+                    }
+                }
+                canvas.ontouchend = function (aaa) {
+                    using = false
+                }
+            } else {
+                //非触屏设备
+                canvas.onmousedown = function (aaa) {
+                    var x = aaa.clientX;
+                    var y = aaa.clientY;
+                    using = true;
+                    if (usingEnabled) {
+                        context.clearRect(x - 5, y - 5, 10, 10)
+                    } else {
+                        oldPoint = { x: x, y: y }
+                    }
+                }
+                canvas.onmousemove = function (aaa) {
+                    var x = aaa.clientX;
+                    var y = aaa.clientY;
+                    if (!using) {
+                        return
+                    }
+                    if (usingEnabled) {
+                        context.clearRect(x - 5, y - 5, 10, 10);
+                    } else {
+                        var newPoint = { x: x, y: y }
+                        drawLine(oldPoint.x, oldPoint.y, newPoint.x, newPoint.y);
+                        oldPoint = newPoint
+                    }
+
+                }
+                canvas.onmouseup = function (aaa) {
+                    using = false
+                }
+
+            }
+
+        }
+        context.strokeStyle = "red";
+        red.onclick = function () {
+            context.strokeStyle = "red";
+            red.classList.add("active");
+            yellow.classList.remove("active");
+            blue.classList.remove("active");
+        }
+        yellow.onclick = function () {
+            context.strokeStyle = "yellow";
+            yellow.classList.add("active");
+            red.classList.remove("active");
+            blue.classList.remove("active");
+        }
+        blue.onclick = function () {
+            context.strokeStyle = "blue";
+            blue.classList.add("active");
+            red.classList.remove("active");
+            yellow.classList.remove("active");
+        }
+        function drawLine(x1, y1, x2, y2) {
+            context.beginPath();
+            context.moveTo(x1, y1);
+            context.lineWidth = lineWidth;
+            context.lineTo(x2, y2);
+            context.stroke();
+            context.closePath();
+        }
+        var usingEnabled = false;
+        var eraserEnabled = false;
+        /**笔的颜色**/
+        eraser.onclick = function () {
+            eraserEnabled = true;
+            eraser.classList.add('active');
+            pen.classList.remove('active');
+            usingEnabled = !usingEnabled;
+            eraser.classList.add('active');
+        }
+        pen.onclick = function () {
+            eraserEnabled = false;
+            pen.classList.add('active');
+            usingEnabled = !usingEnabled;
+            eraser.classList.remove('active');
+            // actions.className = "actions"
+        }
+        /**下载画布**/
+        save.onclick = function(){
+            var url = yyy.toDataURL('image/png');
+            var a = document.createElement('a');
+            document.body.appendChild(a);
+            a.href = url;
+            a.download = 'canvas';
+            a.target = '_blank';
+            a.click()
+        }
+        /**清楚画布**/
+        remove.onclick = function () {
+            context.clearRect(0, 0, yyy.width, yyy.height)
+        }
+        /**线条粗细**/
+        thin.onclick = function () {
+            thin.classList.add('active');
+            thick.classList.remove('active');
+            lineWidth = 5;
+
+        }
+        thick.onclick = function () {
+            thick.classList.add('active');
+            thin.classList.remove('active');
+            lineWidth = 10;
+        }
+    </script>
+</body>
+
+</html>
