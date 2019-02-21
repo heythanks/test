@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        ul {
+            list-style: none;
+            border: 1px solid red;
+            height: 200px;
+            width: 300px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden
+        }
+
+        ul>li {
+            transition: all 2s;
+            position: absolute;
+        }
+
+        img {
+            vertical-align: middle
+        }
+
+        .right {
+            left: 100%
+        }
+
+        .current {
+            z-index: 1;
+            transform: translateX(0%);
+        }
+
+        .leave {
+            z-index: 1;
+            transform: translateX(-100%);
+        }
+
+        .enter {
+            transform: translateX(100%)
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.slim.js"></script>
+</head>
+
+<body>
+    <ul id="container">
+        <li class="current">
+            <img src="https://placem.at/things?w=300&h=200" alt="">
+        </li>
+        <li class="after">
+            <img src="https://placem.at/people?w=300&h=200" alt="">
+        </li>
+        <li class="after">
+            <img src="https://placem.at/places?w=300&h=200" alt="">
+        </li>
+    </ul>
+    <script>
+        let timer;
+        let i = 2;
+        init(2)
+        setInterval(function () {
+            i = lessThree(i)
+            console.log(i)
+            makeLeave(getChild(i));
+            getChild(i).one('transitionend', function () {
+                console.log(1111)
+                makeEnter($(this))
+            })
+            makeCurrent($(`ul>li:nth-child(${lessThree(i+1)})`));
+            i = i+1;
+        }, 3000)
+        function getChild(n) {
+            return $(`ul>li:nth-child(${n})`)
+        }
+        function lessThree(i) {
+            if (i > 3) {
+                i = i % 3;
+                i = (i === 0) ? 3 : i
+            }
+            return i
+        }
+        function init(current) {
+            $(`ul>li:nth-child(${current})`).addClass('current').siblings().addClass('enter')
+        }
+        function makeLeave($node) {
+            $node.removeClass('current enter').addClass('leave');
+            return $node
+        }
+        function makeCurrent($node) {
+            console.log($node,'ddd')
+            $node.removeClass('leave enter').addClass('current');
+            return $node
+        }
+        function makeEnter($node) {
+            $node.removeClass('leave current').addClass('enter');
+            return $node
+        }
+    </script>
+</body>
+
+</html>
