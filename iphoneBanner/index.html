@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        .container {
+            margin-top: 100px;
+            height: 400px;
+            width: 900px;
+            overflow: hidden;
+            margin: 0 auto;
+            box-sizing: border-box;
+            border: #eee 1px solid;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .big-banner {
+            display: flex;
+            padding: 0;
+            transition: 1s all;
+
+        }
+
+        .big-banner>li {
+            background: red;
+            height: 400px;
+            width: 900px;
+        }
+
+        .big-banner>li>img {
+            vertical-align: middle
+        }
+
+        .pos-container {
+            display: flex;
+            width: 900px;
+            margin: 0 auto;
+            justify-content: center;
+            background: #eee;
+        }
+
+        .pos-container li {
+            width: 65px;
+            height: 40px;
+            text-align: center;
+            line-height: 30px;
+            padding-top: 8px;
+            position: relative;
+        }
+
+        .pos-container li:hover,
+        .pos-container li.active {
+            background: #c9c9c9;
+        }
+
+        .pos-container li:hover::before,
+        .pos-container li.active::before {
+            content: '';
+            display: block;
+            position: absolute;
+            border-top: 4px solid #fff;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.slim.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="big-banner">
+            <li>
+                <img src="https://demo.tutorialzine.com/2009/11/beautiful-apple-gallery-slideshow/img/sample_slides/info.jpg" alt="">
+            </li>
+            <li>
+                <img src="https://demo.tutorialzine.com/2009/11/beautiful-apple-gallery-slideshow/img/sample_slides/imac.jpg" alt="">
+            </li>
+            <li>
+                <img src="https://demo.tutorialzine.com/2009/11/beautiful-apple-gallery-slideshow/img/sample_slides/iphone.jpg" alt="">
+            </li>
+            <li>
+                <img src="https://demo.tutorialzine.com/2009/11/beautiful-apple-gallery-slideshow/img/sample_slides/macbook.jpg" alt="">
+            </li>
+        </ul>
+
+    </div>
+    <ul class="pos-container">
+        <li class="active">
+            <img src="https://demo.tutorialzine.com/2009/11/beautiful-apple-gallery-slideshow/img/sample_slides/thumb_macbook.png" alt="">
+        </li>
+        <li>
+            <img src="https://demo.tutorialzine.com/2009/11/beautiful-apple-gallery-slideshow/img/sample_slides/thumb_iphone.png" alt="">
+        </li>
+        <li>
+            <img src="https://demo.tutorialzine.com/2009/11/beautiful-apple-gallery-slideshow/img/sample_slides/thumb_imac.png" alt="">
+        </li>
+        <li>
+            <img src="https://demo.tutorialzine.com/2009/11/beautiful-apple-gallery-slideshow/img/sample_slides/thumb_about.png" alt="">
+        </li>
+    </ul>
+    <script>
+        let liTags = $('.pos-container>li');
+        for (let i = 0; i < liTags.length; i++) {
+            $(liTags[i]).on('click', () => {
+                $('.big-banner').css("margin-left", -i * 900 + 'px');
+                $(liTags[i]).addClass('active');
+                $(liTags[i]).siblings().removeClass('active')
+            })
+        }
+
+        // $('.pos-container>li:nth-child(2)').on('click',()=>{
+        //     $('.big-banner').css("margin-left","-900px");
+        // })
+        // $('.pos-container>li:nth-child(3)').on('click',()=>{
+        //     $('.big-banner').css("margin-left","-1800px");
+        // })
+        // $('.pos-container>li:nth-child(4)').on('click',()=>{
+        //     $('.big-banner').css("margin-left","-2700px");
+        // })
+        // $('.pos-container>li:nth-child(4)').on('click',()=>{
+        //     $('.big-banner').css("margin-left","-2700px");
+        // })
+    </script>
+</body>
+
+</html>
