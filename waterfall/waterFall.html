@@ -1,118 +1,114 @@
 <!Doctype>
 <html>
-	<head>
-		<title>css实现瀑布流</title>
-		<style type="text/css">
-			#water-fall{
-				background: gray;
-				position: relative;
-				display: flow-root;
-			}
-			.box-wrap{
-				padding: 0px 32px 28px 0;
-				position: absolute;
-			    float: left;
-			    box-sizing: border-box;;
-    			width: calc(100%/3);
 
-			}
+<head>
+	<title>三栏自适应瀑布流</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#water-fall {
+			background: gray;
+			position: relative;
+		}
 
-			.img-box{
-				width: 100%;
-				background: red;
-			}
-			img{
-				width: 100%;
-				height: auto;
-			}
+		.box-wrap {
+			margin: 0px 32px 28px 0;
+			position: absolute;
+			width: calc((100% - 64px) / 3);
+		}
+		.box-wrap:nth-child(3n){
+			margin-right: 0;
+		}
+		img {
+			width: 100%;
+			height: auto;
+		}
+	</style>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.4.1/jquery.slim.js"></script>
+</head>
 
-		</style>
-		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.4.1/jquery.slim.js"></script>
-	</head>
-	<body>
-		<div id="water-fall">
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbfile.huabanimg.com/img/category_page/f92bff7c9fc23a955cd23ab0de38ed2af0ff9ce78864">
-				</div>
-			</div>
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbfile.huabanimg.com/img/category_page/ab6755376ce1408465462b027ec1381cdc8d7368bbe8">
-				</div>
-			</div>
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbimg.huabanimg.com/d354fc5fd03fd10a02b10fb3554bdd722413c622a090-slKQZg_/fw/480">
-				</div>
-			</div>
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbimg.huabanimg.com/0ac2e98aac9e649fd637e9d29996e71d2827fe98121b77-qReXzy_/fw/480">
-				</div>
-			</div>
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbimg.huabanimg.com/23df2b59bc8868efc7156422273b311a79f94927d8de-WJeLU7_/fw/480">
-				</div>
-			</div>
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbfile.huabanimg.com/img/category_page/ab6755376ce1408465462b027ec1381cdc8d7368bbe8">
-				</div>
-			</div>
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbimg.huabanimg.com/0ac2e98aac9e649fd637e9d29996e71d2827fe98121b77-qReXzy_/fw/480">
-				</div>
-			</div>
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbimg.huabanimg.com/0ac2e98aac9e649fd637e9d29996e71d2827fe98121b77-qReXzy_/fw/480">
-				</div>
-			</div>
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbimg.huabanimg.com/0ac2e98aac9e649fd637e9d29996e71d2827fe98121b77-qReXzy_/fw/480">
-				</div>
-			</div>
-			<div class="box-wrap">
-				<div class="img-box">
-					<img src="https://hbfile.huabanimg.com/img/category_page/f92bff7c9fc23a955cd23ab0de38ed2af0ff9ce78864">
-				</div>
-			</div>
+<body>
+	<div id="water-fall">
+		<div class="box-wrap">
+			<img src="https://hbfile.huabanimg.com/img/category_page/f92bff7c9fc23a955cd23ab0de38ed2af0ff9ce78864">
 		</div>
-		<script type="text/javascript">
-			$(window).resize(function(){
-				waterFall()
+		<div class="box-wrap">
+			<img src="https://hbfile.huabanimg.com/img/category_page/ab6755376ce1408465462b027ec1381cdc8d7368bbe8">
+		</div>
+		<div class="box-wrap">
+			<img src="https://hbimg.huabanimg.com/d354fc5fd03fd10a02b10fb3554bdd722413c622a090-slKQZg_/fw/480">
+		</div>
+		<div class="box-wrap">
+			<img src="https://hbimg.huabanimg.com/0ac2e98aac9e649fd637e9d29996e71d2827fe98121b77-qReXzy_/fw/480">
+		</div>
+		<div class="box-wrap">
+			<img src="https://hbimg.huabanimg.com/23df2b59bc8868efc7156422273b311a79f94927d8de-WJeLU7_/fw/480">
+		</div>
+		<div class="box-wrap">
+			<img src="https://hbfile.huabanimg.com/img/category_page/ab6755376ce1408465462b027ec1381cdc8d7368bbe8">
+		</div>
+		<div class="box-wrap">
+			<img src="https://hbimg.huabanimg.com/0ac2e98aac9e649fd637e9d29996e71d2827fe98121b77-qReXzy_/fw/480">
+		</div>
+		<div class="box-wrap">
+			<img src="https://hbimg.huabanimg.com/0ac2e98aac9e649fd637e9d29996e71d2827fe98121b77-qReXzy_/fw/480">
+		</div>
+		<div class="box-wrap">
+			<img src="https://hbimg.huabanimg.com/0ac2e98aac9e649fd637e9d29996e71d2827fe98121b77-qReXzy_/fw/480">
+		</div>
+		<div class="box-wrap">
+			<img src="https://hbfile.huabanimg.com/img/category_page/f92bff7c9fc23a955cd23ab0de38ed2af0ff9ce78864">
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+			waterFall('#water-fall','.box-wrap',32,28);
+			$(window).resize(function () {
+				waterFall('#water-fall','.box-wrap',32,28)
 			})
-			$(document).scroll(function(){
-				if($(document).scrollTop() + $(window).height() === parseInt($('#water-fall .box-wrap').last().offset().top)){
+			$(document).scroll(function () {
+				if ($(document).scrollTop() + $(window).height() >= parseInt($('#water-fall .box-wrap').last()
+						.offset().top)) {
 					console.log('执行ajax')
 				}
 			})
-			window.onload = function(){
-				waterFall();
-				function waterFall(){
-					var itemWidth = $('.box-wrap').eq(0).outerWidth(), parentWidth = $('#water-fall').width(),col = Math.floor(parentWidth / itemWidth);
-				var heightArr = [],minHeight = 0,minIndex = 0
-				console.log(col,itemWidth);
-				$('.box-wrap').each(function(index,ele){
-					if(index<col){
-						heightArr.push($(ele).outerHeight());
-						$(ele).css({top: 0,left: (itemWidth*index)+'px'})
-					}else{
-						minHeight = Math.min.apply(null,heightArr);
-						minIndex = $.inArray(minHeight,heightArr)
-						$(ele).css({top: heightArr[minIndex] + 'px',left:  minIndex * itemWidth + 'px'});
-						heightArr[minIndex] += $(ele).outerHeight(); 
-					}
-				})
+		}
+		/**带有的父子名称，
+		 * @ parentName 带有id或类名父选择器
+		 * @ parentName 带有id或类名子选择器
+		 * @ colDitance 横向间距
+		 * @ rowDistance 纵向间距**/
+		function waterFall(parentName,childName,colDitance,rowDistance) {
+			var itemWidth = $(parentName + '>' + childName).eq(0).outerWidth(),
+				parentWidth = $(parentName).width(),
+				// col = Math.floor(parentWidth / itemWidth);
+				col = 3;
+			var heightArr = [],
+				minHeight = 0,
+				minIndex = 0;
+			$('.box-wrap').each(function (index, ele) {
+				if (index < col) {
+					heightArr.push($(ele).outerHeight()+rowDistance);
+					$(ele).css({
+						top: 0,
+						left: ((itemWidth + rowDistance) * index) + 'px'
+					})
+				} else {
+					minHeight = Math.min.apply(null, heightArr);
+					minIndex = $.inArray(minHeight, heightArr)
+					$(ele).css({
+						top: heightArr[minIndex] + 'px',
+						left: (minIndex * (itemWidth + rowDistance)) + 'px'
+					});
+					heightArr[minIndex] += $(ele).outerHeight() + colDitance;
 				}
-			}
-				
-				
-			
-		</script>
-	</body>
+			})
+			var lastItem = $(parentName + '>' + childName).last();
+			$(parentName).height(Math.max.apply(null,heightArr) + 'px')
+		}
+	</script>
+</body>
+
 </html>
