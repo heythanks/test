@@ -83,8 +83,7 @@
 		function waterFall(parentName,childName,colDitance,rowDistance) {
 			var itemWidth = $(parentName + '>' + childName).eq(0).outerWidth(),
 				parentWidth = $(parentName).width(),
-				// col = Math.floor(parentWidth / itemWidth);
-				col = 3;
+				col = Math.floor(parentWidth / itemWidth);
 			var heightArr = [],
 				minHeight = 0,
 				minIndex = 0;
