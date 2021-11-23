@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 let fs = require('fs');
 let dirName = process.argv[2];
+
+
+
 fs.mkdirSync("" + dirName);
 fs.appendFileSync(dirName + '/index.html','<!DOCTYPE><title>Hello</title><h1>Hi</h1>')
 fs.mkdirSync(dirName + "/css");
